@@ -1,4 +1,4 @@
-name: Deploy Website
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -13,18 +13,21 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4   
+        uses: actions/checkout@v4
 
       - name: Setup Pages
-        uses: actions/configure-pages@v4   
+        uses: actions/configure-pages@v4
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3  
+        uses: actions/upload-pages-artifact@v3
         with:
-          path: ./lakshmipriyaks@mulearn/Task-3
+          path: '.'
 
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4   
+        id: deployment
+        uses: actions/deploy-pages@v4
